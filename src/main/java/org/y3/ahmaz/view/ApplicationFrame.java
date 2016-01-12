@@ -22,11 +22,9 @@ import org.y3.ahmaz.AhmazConfiguration;
 /** 
  * <p>Title: org.y3.ahmaz.view - ApplicationFrame</p>
  * <p>Description: </p>
- * <p>Copyright: 2015</p>
- * <p>Company: SE Bordnetze GmbH</p>
- * <p>Department: CIT SC GSD</p>
+ * <p>Copyright: 2015 - 2016</p>
+ * <p>Organisation: IT-Happens.de</p>
  * @author Christian.Rybotycky
- * @version $Id$
 */
 public class ApplicationFrame {
     

@@ -3,16 +3,17 @@ package org.y3.ahmaz;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.stage.Stage;
+import lombok.extern.log4j.Log4j2;
 import org.y3.ahmaz.view.ApplicationFrame;
 
-
+@Log4j2
 public class MainApp extends Application {
     
     private static String[] args;
 
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println("start");
+        log.debug("start");
         ApplicationFrame applicationFrame = new ApplicationFrame(stage);
         applicationFrame.setVisible(true);
     }
@@ -26,7 +27,7 @@ public class MainApp extends Application {
      * @param _args the command line arguments
      */
     public static void main(String[] _args) {
-        System.out.println("main");
+        log.debug("main");
         args = _args;
         launch(args);
     }
