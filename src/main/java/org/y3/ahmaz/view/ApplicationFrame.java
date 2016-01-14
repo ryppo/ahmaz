@@ -1,11 +1,10 @@
 package org.y3.ahmaz.view;
 
+import com.sebn.gsd.aptgrade.core.database.DatabaseException;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.scene.Group;
@@ -17,7 +16,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.y3.ahmaz.AhmazConfiguration;
+import lombok.extern.log4j.Log4j2;
+import org.y3.ahmaz.model.AhmazConfiguration;
+import org.y3.ahmaz.model.ModelController;
 
 /** 
  * <p>Title: org.y3.ahmaz.view - ApplicationFrame</p>
@@ -26,6 +27,7 @@ import org.y3.ahmaz.AhmazConfiguration;
  * <p>Organisation: IT-Happens.de</p>
  * @author Christian.Rybotycky
 */
+@Log4j2
 public class ApplicationFrame {
     
     private final Stage primaryStage;
@@ -33,10 +35,12 @@ public class ApplicationFrame {
     private CheckMenuItem mi_fullScreen;
     private AhmazConfiguration CONF = new AhmazConfiguration();
     private Scene root_scene;
+    private ModelController modelController;
 
-    public ApplicationFrame(Stage _primaryStage) {
+    public ApplicationFrame(Stage _primaryStage) throws DatabaseException {
         primaryStage = _primaryStage;
         buildUi();
+        bindUi();
     }
 
     private void buildUi() {
@@ -96,8 +100,15 @@ public class ApplicationFrame {
     }
     
     private void handleException(Exception e) {
-        Logger.getLogger(ApplicationFrame.class.getName()).log(Level.SEVERE, null, e);
+        log.error(e);
         e.printStackTrace();
+    }
+    
+    public void bindUi() throws DatabaseException {
+        log.debug("bindUi");
+        modelController = new ModelController(CONF);
+        modelController.initAhmazDatabase();
+        modelController.debugDatabaseToConsole();
     }
     
 }

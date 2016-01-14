@@ -1,15 +1,21 @@
-package org.y3.ahmaz;
+package org.y3.ahmaz.model;
 
+import com.sebn.gsd.aptgrade.core.database.ModelFactory;
+import com.sebn.gsd.aptgrade.core.model.Person;
+import java.util.ArrayList;
 import javafx.scene.image.Image;
+import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.Logger;
 import org.y3.commons.fx.FxConfiguration;
 
 /** 
- * <p>Title: org.y3.ahmaz - AhmazConfiguration</p>
+ * <p>Title: org.y3.ahmaz.model - AhmazConfiguration</p>
  * <p>Description: </p>
  * <p>Copyright: 2015 - 2016</p>
  * <p>Organisation: IT-Happens.de</p>
  * @author Christian.Rybotycky
 */
+@Log4j2
 public class AhmazConfiguration extends FxConfiguration {
     
     public Image APPLICATION_ICON = getFxImage("ahmaz_no_subtitle.png");
@@ -46,5 +52,16 @@ public class AhmazConfiguration extends FxConfiguration {
     public String getStylesheetName() {
         return "ahmaz.css";
     }
+
+    @Override
+    public Logger getLogger() {
+        return log;
+    }
+    
+    public ArrayList<ModelFactory> getModelFactoriesToRegister() {
+        ArrayList<ModelFactory> modelFactories = new ArrayList<>();
+        modelFactories.add(new ModelFactory(Person.class));
+        return modelFactories;
+    } 
 
 }
