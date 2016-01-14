@@ -20,12 +20,18 @@ public class AhmazConfiguration extends FxConfiguration {
     
     public Image APPLICATION_ICON = getFxImage("ahmaz_no_subtitle.png");
     public Image APPLICATION_SYMBOL = getFxImage("ahmaz_no_subtitle_symbol.png");
+    public Image PERSON_ICON = getFxImage("person_24.png");
     public Image Y3_ICON = getFxImage("y3.png");
     public Image Y3_SYMBOL = getFxImage("y3_symbol.png");
     
+    public String ADD_PERSON = getRbString("ADD_PERSON");
     public String APPLICATION_IDENTITY = getRbString("APPLICATION_IDENTITY");
     public String APPLICATION_ORIGIN = getRbString("APPLICATION_ORIGIN");
+    public String FIRSTNAME = getRbString("FIRSTNAME");
     public String FULLSCREEN = getRbString("FULLSCREEN");
+    public String LASTNAME = getRbString("LASTNAME");
+    public String PERSON = getRbString("PERSON");
+    public String SAVE = getRbString("SAVE");
     public String APPLICATION_ORIGIN_URL = "http://www.IT-Happens.de";
 
     @Override

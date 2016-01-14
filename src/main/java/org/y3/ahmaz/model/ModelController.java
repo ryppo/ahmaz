@@ -3,6 +3,7 @@ package org.y3.ahmaz.model;
 import com.sebn.gsd.aptgrade.core.database.DatabaseException;
 import com.sebn.gsd.aptgrade.core.database.GraphDatabase;
 import com.sebn.gsd.aptgrade.core.database.ModelFactory;
+import com.sebn.gsd.aptgrade.core.model.Person;
 import java.util.ArrayList;
 import java.util.Iterator;
 import lombok.extern.log4j.Log4j2;
@@ -20,6 +21,10 @@ public class ModelController {
     
     private GraphDatabase ahmazDatabase = null;
     private AhmazConfiguration ahmazConfiguration;
+
+    public AhmazConfiguration getAhmazConfiguration() {
+        return ahmazConfiguration;
+    }
     private FxContext ahmazFxContext;
     private ArrayList<ModelFactory> registeredModelFactories;
 
@@ -43,6 +48,10 @@ public class ModelController {
             log.error(ex);
         }
         return successful;
+    }
+    
+    public Person createPerson() {
+        return new Person(ahmazDatabase.createNode("Person"));
     }
 
     public String getPathToDatabase() throws InstantiationException, IllegalAccessException {

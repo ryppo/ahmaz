@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j2;
 import org.y3.ahmaz.model.AhmazConfiguration;
 import org.y3.ahmaz.model.ModelController;
+import org.y3.ahmaz.view.model.PersonForm;
 
 /** 
  * <p>Title: org.y3.ahmaz.view - ApplicationFrame</p>
@@ -35,7 +36,7 @@ public class ApplicationFrame {
     private CheckMenuItem mi_fullScreen;
     private AhmazConfiguration CONF = new AhmazConfiguration();
     private Scene root_scene;
-    private ModelController modelController;
+    private ModelController MC;
 
     public ApplicationFrame(Stage _primaryStage) throws DatabaseException {
         primaryStage = _primaryStage;
@@ -47,7 +48,7 @@ public class ApplicationFrame {
         primaryStage.setTitle(CONF.APPLICATION_IDENTITY);
         primaryStage.getIcons().add(CONF.APPLICATION_ICON);
         buildMenu();
-        BorderPane rootPane = new BorderPane();
+        rootPane = new BorderPane();
         rootPane.setTop(menuBar);
         Group rootGroup = new Group();
         rootGroup.getChildren().add(rootPane);
@@ -55,12 +56,14 @@ public class ApplicationFrame {
         root_scene.getStylesheets().add(CONF.getStylesheet());
         primaryStage.setScene(root_scene);
     }
+    private BorderPane rootPane;
     
     private void buildMenu() {
         ImageView menuAppIcon = new ImageView(CONF.APPLICATION_SYMBOL);
-        Menu menuApp = new Menu(CONF.APPLICATION_IDENTITY, menuAppIcon);
-
+        
+        //menu: application
         mi_fullScreen = new CheckMenuItem(CONF.FULLSCREEN);
+        Menu menuApp = new Menu(CONF.APPLICATION_IDENTITY, menuAppIcon);
         menuApp.setOnShowing((Event event) -> {
             mi_fullScreen.setSelected(primaryStage.isFullScreen());
         });
@@ -75,12 +78,21 @@ public class ApplicationFrame {
                 handleException(ex);
             }
         });
-        
         menuApp.getItems().addAll(mi_fullScreen, mi_y3);
         
+        //menu: person
+        Menu menuPerson = new Menu(CONF.PERSON, new ImageView(CONF.PERSON_ICON));
+        MenuItem mi_addPerson = new MenuItem(CONF.ADD_PERSON);
+        mi_addPerson.setOnAction((ActionEvent t) -> {
+            actionAddPerson();
+        });
+        menuPerson.getItems().addAll(mi_addPerson);
+        
+        
+        //menu bar
         menuBar = new MenuBar();
         menuBar.prefWidthProperty().bind(primaryStage.widthProperty());
-        menuBar.getMenus().addAll(menuApp);
+        menuBar.getMenus().addAll(menuApp, menuPerson);
     }
     
     public void setVisible(boolean visible) {
@@ -99,6 +111,10 @@ public class ApplicationFrame {
         Desktop.getDesktop().browse(new URI(CONF.APPLICATION_ORIGIN_URL));
     }
     
+    private void actionAddPerson() {
+        rootPane.setCenter(new PersonForm(MC));
+    }
+    
     private void handleException(Exception e) {
         log.error(e);
         e.printStackTrace();
@@ -106,9 +122,9 @@ public class ApplicationFrame {
     
     public void bindUi() throws DatabaseException {
         log.debug("bindUi");
-        modelController = new ModelController(CONF);
-        modelController.initAhmazDatabase();
-        modelController.debugDatabaseToConsole();
+        MC = new ModelController(CONF);
+        MC.initAhmazDatabase();
+        MC.debugDatabaseToConsole();
     }
     
 }
